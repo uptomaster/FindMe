@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>유실물 찾기</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+  <script defer src="/js/main.js"></script>
+  <script defer src="/js/darkmode.js"></script>
+  <script defer src="/js/dynamicBackground.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body class="morning">
+  <header>
+    <!-- <img class="header-logo"> -->
+     <div></div>
+    <h1>FindMe</h1>
+    <div class="header-right">
+      <div class="search-wrapper">
+        <input type="text" id="searchInput" placeholder="유실물 검색...">
+        <button class="search-btn">🔍</button>
+      </div>
+      <button class="nav-btn"><a href="/html/report.html">제보하기</a></button>
+      <div class="toggle-wrapper">
+        <input type="checkbox" id="darkToggle">
+        <label for="darkToggle" class="toggle-label">
+          <span class="toggle-ball"></span>
+        </label>
+      </div>
+      <div class="bg-toggle-wrapper">
+        <button class="bg-btn active" data-mode="morning">아침</button>
+        <button class="bg-btn" data-mode="afternoon">노을</button>
+        <button class="bg-btn" data-mode="night">밤</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="sort-section">
+      <label for="sortSelect"></label>
+      <select id="sortSelect">
+        <option value="reward">보상금 높은 순</option>
+        <option value="recent">최근 등록 순</option>
+      </select>
+    </section>
+
+    <section class="map-wrapper">
+      <h2>지도</h2>
+      <div class="map-container" id="map"></div>
+    </section>
+
+    <section class="item-container" id="itemContainer">
+      <!-- 유실물 카드 JS로 생성 -->
+    </section>
+
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <footer>
+    <div class="footer-menu">
+      <!-- <button class="footer-btn">홈</button>
+      <button class="footer-btn">검색</button>
+      <div class="dropdown">
+        <button class="footer-btn">설정 ▾</button>
+        <div class="dropdown-content">
+          <a href="#">프로필</a>
+          <a href="#">알림</a>
+          <a href="#">고객센터</a>
+        </div>
+      </div> -->
+      <!-- <button class="footer-btn">문의</button> -->
+    </div>
+    © 2025 FindMe. All rights reserved.
+  </footer>
+
+  <canvas id="backgroundCanvas"></canvas>
+</body>
+</html>

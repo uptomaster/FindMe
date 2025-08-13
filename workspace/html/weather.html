@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>날씨 & 시간</title>
+  <link rel="stylesheet" href="/css/diary.css">
+  <script defer src="/js/weather.js"></script>
+  <script defer src="/js/background.js"></script>
+</head>
+<body>
+  <header>
+    <h1>날씨 & 시간</h1>
+    <nav>
+      <a href="/html/main.html">메인</a>
+      <a href="/html/diary.html">하루 기록</a>
+    </nav>
+  </header>
+
+  <main class="glass-container">
+    <div class="weather-widget">
+      <h2>현재 날씨</h2>
+      <img id="icon" alt="날씨 아이콘" width="80">
+      <p id="location">위치: 로딩중...</p>
+      <p id="temp">온도: --</p>
+      <p id="desc">날씨: --</p>
+      <p id="humidity">습도: --</p>
+      <p id="wind">풍속: --</p>
+      <button id="refresh">위치 다시 검색</button>
+    </div>
+    <div class="time-widget">
+      <h2>현재 시간</h2>
+      <p id="currentTime">--:--:--</p>
+    </div>
+    <div class="forecast">
+      <h2>3시간별 예보</h2>
+      <div id="forecastList"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 MyProject</p>
+  </footer>
+
+  <script src="background.js"></script>
+  <script src="weather.js"></script>
+</body>
+</html>

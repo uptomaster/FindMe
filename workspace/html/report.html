@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제보하기</title>
+  <link rel="stylesheet" href="/css/report.css">
+</head>
+<body>
+  <header>
+    <h1>제보하기</h1>
+    <nav>
+      <a href="index.html">메인</a>
+      <a href="diary.html">하루 기록</a>
+      <a href="weather.html">날씨 & 시간</a>
+    </nav>
+  </header>
+
+  <main class="glass-container">
+    <section>
+      <h2>소중한 제보를 보내주세요</h2>
+      <form id="reportForm">
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" placeholder="제보 제목을 입력하세요" required>
+
+        <label for="category">카테고리</label>
+        <select id="category" name="category">
+          <option value="일반">일반</option>
+          <option value="사건">사건</option>
+          <option value="안전">안전</option>
+          <option value="기타">기타</option>
+        </select>
+
+        <label for="content">내용</label>
+        <textarea id="content" name="content" placeholder="자세한 내용을 입력하세요" required></textarea>
+
+        <label for="file">파일 첨부 (선택)</label>
+        <input type="file" id="file" name="file">
+
+        <button type="submit">제보 보내기</button>
+      </form>
+      <p id="resultMessage" style="display:none; margin-top:10px;"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 MyProject</p>
+  </footer>
+
+  <script src="background.js"></script>
+  <script src="report.js"></script>
+</body>
+</html>

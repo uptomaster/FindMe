@@ -1,0 +1,115 @@
+/* 공통 배경: 메인페이지와 동일하게 glass effect 컨테이너 */
+.glass-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 40px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* 페이지 제목 */
+h2 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  text-shadow: 0 0 6px rgba(255,255,255,0.5);
+}
+
+/* 폼 레이아웃 */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* 라벨 */
+form label {
+  font-weight: bold;
+  color: rgba(255,255,255,0.9);
+  transition: color 0.3s ease;
+}
+form label:hover {
+  color: #ffe066;
+}
+
+/* 입력 필드, 선택, 텍스트 영역 */
+form input[type="text"],
+form select,
+form textarea,
+form input[type="file"] {
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form select:focus,
+form textarea:focus,
+form input[type="file"]:focus {
+  outline: none;
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+  border-color: #ffe066;
+}
+
+/* 파일 첨부 hover 효과 */
+form input[type="file"]:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: #ffec99;
+}
+
+/* 버튼 */
+form button {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff8a65, #ff5722);
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+  background: linear-gradient(135deg, #ff7043, #e64a19);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+form button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* 제출 후 메시지 */
+#resultMessage {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* 반응형 */
+@media screen and (max-width: 600px) {
+  .glass-container {
+    padding: 20px;
+    margin: 40px 10px;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* 등장 애니메이션 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
