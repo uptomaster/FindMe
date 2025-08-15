@@ -27,32 +27,35 @@ for (let i = 0; i < 200; i++) {
 let sun = { x: 0, y: 0, radius: 60 };
 let moon = { x: 0, y: 0, radius: 50 };
 
-// 버튼 즉시 선택 이벤트
+// 버튼 클릭 이벤트
 document.querySelectorAll('.bg-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const selected = btn.dataset.mode;
-    manualMode = selected;
+    manualMode = selected; // 클릭하면 수동모드 활성화
     document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
     if (selected === 'morning') time = 0;
     else if (selected === 'afternoon') time = 0.33;
     else if (selected === 'night') time = 0.66;
+
+    updateColors(); // 즉시 header/main/footer/h1 색 변경
   });
 });
 
+// 배경, 해/달, 별 그리기
 function drawBackground() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // 배경 색상
   let topColor, bottomColor;
-  if (time < 0.33) { // Morning
+  if (time < 0.33) { // 아침
     topColor = '#87CEFA';
     bottomColor = '#E0F7FF';
-  } else if (time < 0.66) { // Afternoon
+  } else if (time < 0.66) { // 노을
     topColor = '#FFAD33';
     bottomColor = '#FFD9B5';
-  } else { // Night
+  } else { // 밤
     topColor = '#0B0C2A';
     bottomColor = '#1A1C4A';
   }
@@ -62,21 +65,15 @@ function drawBackground() {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-// 해/달 높이 통일
-const sunMoonY = canvas.height * 0.25; // 모든 시간대 y좌표 통일
+  const sunMoonY = canvas.height * 0.25;
 
-// 해 위치
-if (time < 0.66) { // Morning & Afternoon
-    if (time < 0.33) { // Morning
-        sun.x = canvas.width * 0.1 + (time / 0.33) * canvas.width * 0.3;
-    } else { // Afternoon
-        const afternoonProgress = (time - 0.33) / 0.33;
-        sun.x = canvas.width * 0.1 + afternoonProgress * canvas.width * 0.25; // 왼쪽 이동
-    }
+  // 해 그리기
+  if (time < 0.66) {
+    if (time < 0.33) sun.x = canvas.width * 0.1 + (time / 0.33) * canvas.width * 0.3;
+    else sun.x = canvas.width * 0.1 + ((time - 0.33) / 0.33) * canvas.width * 0.25;
     sun.y = sunMoonY;
 
-    // 해 색상 (노을일 때 더 노란색)
-    let sunColor = (time < 0.33) ? 'rgba(255,255,150,1)' : 'rgba(255, 210, 100,1)';
+    let sunColor = (time < 0.33) ? 'rgba(255,255,150,1)' : 'rgba(255,210,100,1)';
     let sunGrad = ctx.createRadialGradient(sun.x, sun.y, 10, sun.x, sun.y, sun.radius);
     sunGrad.addColorStop(0, sunColor);
     sunGrad.addColorStop(1, 'rgba(255,255,150,0)');
@@ -84,54 +81,62 @@ if (time < 0.66) { // Morning & Afternoon
     ctx.beginPath();
     ctx.arc(sun.x, sun.y, sun.radius, 0, Math.PI*2);
     ctx.fill();
-}
+  }
 
-// 달 + 별
-if (time >= 0.66) {
+  // 달 + 별
+  if (time >= 0.66) {
     const nightProgress = (time - 0.66) / 0.34;
-    moon.x = canvas.width * 0.15 + nightProgress * canvas.width * 0.25; // 왼쪽 이동
+    moon.x = canvas.width * 0.15 + nightProgress * canvas.width * 0.25;
     moon.y = sunMoonY;
 
     let moonGrad = ctx.createRadialGradient(moon.x, moon.y, 10, moon.x, moon.y, moon.radius);
-    moonGrad.addColorStop(0, 'rgba(255, 255, 220, 1)');
-    moonGrad.addColorStop(1, 'rgba(255, 255, 220, 0)');
+    moonGrad.addColorStop(0, 'rgba(255,255,220,1)');
+    moonGrad.addColorStop(1, 'rgba(255,255,220,0)');
     ctx.fillStyle = moonGrad;
     ctx.beginPath();
     ctx.arc(moon.x, moon.y, moon.radius, 0, Math.PI*2);
     ctx.fill();
-}
 
-  // 시간 흐름
-  if (!manualMode) time += 0.0003; // 매우 느리게
+    // 별
+    stars.forEach(star => {
+      ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI*2);
+      ctx.fill();
+    });
+  }
+
+  // 자동 시간 흐름
+  if (!manualMode) time += 0.0003;
   if (time > 1) time = 0;
 
-  // Header / Footer / FindMe 글씨 색 업데이트
-  updateHeaderFooterColors();
-
+  updateColors(); // header/main/footer/h1 색 업데이트
   requestAnimationFrame(drawBackground);
 }
 
-function updateHeaderFooterColors() {
+// header/main/footer/h1 색 업데이트
+function updateColors() {
   const header = document.querySelector('header');
+  const mainTag = document.querySelector('main');
   const footer = document.querySelector('footer');
   const title = document.querySelector('header h1');
 
   let bgColor, textColor;
-  if (time < 0.33) { // Morning
-    bgColor = '#FFFBF0';
-    textColor = '#1A237E';
-  } else if (time < 0.66) { // Afternoon
+  if (time < 0.33) { // 아침
+    bgColor = '#FFFFFF';
+    textColor = '#1E90FF'; // 파랑
+  } else if (time < 0.66) { // 노을
     bgColor = '#FFD9B5';
-    textColor = '#FF5E3A';
-  } else { // Night
-    bgColor = '#2C2E36';
-    textColor = '#FFF475';
+    textColor = '#32CD32'; // 초록
+  } else { // 밤
+    bgColor = '#000000';
+    textColor = '#FFFF00'; // 노랑
   }
 
-  header.style.background = bgColor;
-  footer.style.background = bgColor;
+  header.style.backgroundColor = bgColor;
+  mainTag.style.backgroundColor = bgColor;
+  if(footer) footer.style.backgroundColor = bgColor;
   title.style.color = textColor;
-  title.style.transition = 'color 1s linear';
 }
 
 drawBackground();
